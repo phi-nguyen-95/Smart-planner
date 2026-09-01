@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Planner</title>
+</head>
+
+<body>
+    <h1>Smart Planner</h1>
+
+    <h2>Weather-Based Outdoor Activity Planner</h2>
+
+    <p>
+        Enter a location to check the weather and determine
+        whether conditions are suitable for outdoor activities.
+    </p>
+    
+    <form method="POST">
+        <label for="location">Location:</label>
+
+	<input
+	    type="text"
+	    id="location"
+	    name="location"
+	    placeholder="Example: Montgomery, Alabama"
+	    required
+	>
+
+	<button type="submit">Check Weather</button>
+    </form>
+
+    {% if location %}
+        <h2>Location</h2>
+        <p>You entered: {{ location }}</p>
+    {% endif %}
+
+</body>
+</html>
