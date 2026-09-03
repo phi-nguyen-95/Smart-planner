@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Smart Planner</title>
 </head>
 
@@ -28,9 +29,110 @@
 	<button type="submit">Check Weather</button>
     </form>
 
-    {% if location %}
-        <h2>Location</h2>
-        <p>You entered: {{ location }}</p>
+    {% if error %}
+        <h3>Error</h3>
+        <p>{{ error }}</p>
+    {% endif %}
+
+    {% if weather %}
+        <hr>
+        <h2>Current Weather</h2>
+        </p>
+
+        <p>
+            <strong>Location:</strong>
+            {{ weather.location }}
+        </p>
+
+        <p>
+            <strong>Temperature:</strong>
+            {{ weather.temperature }} °C
+        </p>
+
+        <p>
+            <strong>Humidity:</strong>
+            {{ weather.humidity }} %
+        </p>
+
+        <p>
+            <strong>Wind Speed:</strong>
+            {{ weather.wind_speed }} km/h
+        </p>
+
+        <p>
+            <strong>Precipitation</strong>
+            {{ weather.precipitation }} mm
+        <p>
+            <strong>Observed At:</strong>
+            {{ weather.observed_at }}
+        </p>
+
+        <h2>Outdoor Activity Analysis</h2>
+        
+        <p>
+            <strong>Activity Score:</strong>
+            {{ activity_score }} / 100
+        </p>
+
+        <p>
+            <strong>Rating:</strong>
+            {{ activity_rating }}
+        </p>
+    {% endif %}
+
+    <hr>
+
+    <h2>Weather History</h2>
+
+    {% if history %}
+        <table border="1" cellpadding="8">
+        
+            <tr>
+                <th>ID</th>
+                <th>Location</th>
+                <th>Temperature</th>
+                <th>Humidity</th>
+                <th>Rain</th>
+                <th>Wind</th>
+            <tr>
+  
+            {% for record in history %}
+
+                <tr>
+
+                    <td>
+                        {{ record.id }}
+                    </td>
+
+                    <td>
+                        {{ record.location }}
+                    </td>
+
+                    <td>
+                        {{ record.temperature }} °C
+                    </td>
+
+                    <td>
+                        {{ record.humidity }} %
+                    </td>
+
+                    <td>
+                        {{ record.precipitation }} mm
+                    </td>
+
+                    <td>
+                        {{ record.wind_speed }} km/h
+                    </td>
+ 
+                </tr>
+            {% endfor %}
+
+        </table>
+
+    {% else %}
+        <p>
+            No weather records have been stored yet
+        </p>
     {% endif %}
 
 </body>
