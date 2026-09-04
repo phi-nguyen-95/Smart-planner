@@ -34,6 +34,8 @@
         <p>{{ error }}</p>
     {% endif %}
 
+   
+
     {% if weather %}
         <hr>
         <h2>Current Weather</h2>
@@ -67,17 +69,65 @@
             {{ weather.observed_at }}
         </p>
 
-        <h2>Outdoor Activity Analysis</h2>
-        
-        <p>
-            <strong>Activity Score:</strong>
-            {{ activity_score }} / 100
-        </p>
+        {% if analysis_error %}
+            <h3>Analysis Service Error</h3>
+            <p>{{ analysis_error }}</p>
+        {% elif activity_score is not none %}
 
-        <p>
-            <strong>Rating:</strong>
-            {{ activity_rating }}
-        </p>
+            <h2>Outdoor Activity Analysis</h2>
+        
+            <p>
+                <strong>Activity Score:</strong>
+                {{ activity_score }} / 100
+            </p>
+
+            <p>
+                <strong>Rating:</strong>
+                {{ activity_rating }}
+            </p>
+   
+            {% if trend_analysis %}
+                <h2>Weather Trend Analysis</h2>
+                {% if trend_analysis.status == "ok" %}
+
+                    <p>
+                        <strong>Overall Trend:</strong>
+                        {{ trend_analysis.overall_trend }}
+                    </p>
+
+                    <p>
+                        <strong>Temperature Change:</strong>
+                        {{ trend_analysis.temperature_change }} °C
+                    </p>
+
+                    <p>
+                        <strong>Humidity Change:</strong>
+                        {{ trend_analysis.humidity_change }} %
+                    </p>
+
+                    <p>
+                        <strong>Precipitation Change:</strong>
+                        {{ trend_analysis.precipitation_change }} mm
+                    </p>
+
+                    <p>
+                        <strong>Wind Change:</strong>
+                        {{ trend_analysis.wind_change }} km/h
+                    </p>
+
+                    <p>
+                        <strong>Activity Score Change:</strong>
+                        {{ trend_analysis.activity_score_change }}
+                    </p>
+                {% else %}
+                    <p>{{ trend_analysis.message }}</p>
+
+            {% endif %}
+     
+         {% endif %}
+
+    {% endif %}
+
     {% endif %}
 
     <hr>

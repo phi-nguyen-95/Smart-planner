@@ -28,3 +28,13 @@ def get_recent_weather(limit=20):
         statement = (select(WeatherRecord).order_by(WeatherRecord.id.desc()).limit(limit))
         records = session.scalars(statement).all()
         return list(records)
+
+def get_recent_weather_by_location(location, limit=2):
+    """
+    Return the most recent weather records for one specific location.
+    """
+
+    with SessionLocal() as session:
+        statement = select(WeatherRecord).where(WeatherRecord.location == location).order_by(WeatherRecord.id.desc()).limit(limit)
+        records = session.scalars(statement).all()
+    return list(records)

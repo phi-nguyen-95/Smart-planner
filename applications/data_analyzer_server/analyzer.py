@@ -31,3 +31,34 @@ def get_activity_rating(score):
         return "Fair"
     else:
         return "Poor"
+
+def analyze_weather_trend(current, previous):
+    """
+    Compare two weather records and determine whether outdoor conditions
+    are improving, worsening, or stable.
+    """
+    temperature_change = round(current.temperature-previous.temperature,1)   
+    humidity_change = round(current.humidity-previous.humidity,1)
+    precipitation_change = round(current.precipitation-previous.precipitation,1)
+    wind_change = round(current.wind_speed-previous.wind_speed,1)
+    current_score = calculate_activity_score(current.temperature,
+    current.precipitation, current.wind_speed, current.humidity)
+    previous_score = calculate_activity_score(previous.temperature,
+    previous.precipitation, previous.wind_speed, previous.humidity)
+    score_change = current_score-previous_score
+    if score_change >= 5:
+        overall_trend = "Improving"
+    elif score_change <= -5:
+        ovarall_trend = "Worsening"
+    else:
+        overall_trend = "Stable"
+    return {
+        "temperature_change": temperature_change,
+        "humidity_change": humidity_change,
+        "precipitation_change": precipitation_change,
+        "wind_change": wind_change,
+        "previous_activity_score": previous_score,
+        "current_activity_score": current_score,
+        "activity_score_change": score_change,
+        "overall_trend": overall_trend }
+   
