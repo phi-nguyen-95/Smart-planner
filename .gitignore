@@ -4,3 +4,4 @@ __pycache__/
 .DS_Store
 .env
 weather.db
+test_weather.db

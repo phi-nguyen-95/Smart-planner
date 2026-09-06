@@ -1,3 +1,4 @@
+import uuid
 import threading
 import unittest
 
@@ -36,8 +37,8 @@ class TestRestAnalysisIntegration(unittest.TestCase):
         """
         Insert database records before each test.
         """
-        self.location = "REST Integration Test City"
-        self._delete_test_records()
+        self.location = "REST Integration Test City" + uuid.uuid4().hex[:8]
+        self.addCleanup(self._delete_test_records)
 	# Bad weather record        
         save_weather({"location": self.location, "latitude": 47.0, "longitude": -122.0,
         "temperature": 38.0, "humidity": 95.0, "precipitation": 10.0,
@@ -55,7 +56,7 @@ class TestRestAnalysisIntegration(unittest.TestCase):
 
     def _delete_test_records(self):
         with SessionLocal() as session:
-            session.execute(delete(WeatherRecord).where(WeatherRecord.location == "REST Integration Test City"))
+            session.execute(delete(WeatherRecord).where(WeatherRecord.location == self.location))
         session.commit()
 
     def test_rest_trend_colloboration(self):

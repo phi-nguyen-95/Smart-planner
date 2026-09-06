@@ -2,7 +2,7 @@ import time
 from flask import Flask, render_template, request, jsonify
 from prometheus_client import CollectorRegistry, Counter
 
-
+from applications.data_collector_server.producer import publish_weather_event
 from applications.data_collector_server.collector import collect_weather
 from components.analysis_client import get_latest_analysis, get_trend_analysis
 from components.database.repository import save_weather, get_recent_weather
@@ -69,6 +69,8 @@ def home():
                 weather = collect_weather(location)
                 # Save fetched weather data to database
                 save_weather(weather)
+                # Publish asynchronous weather event
+                publish_weather_event(weather)
             except Exception as exc:
                 error = f"Unable to collect weather data: {exc}"
  

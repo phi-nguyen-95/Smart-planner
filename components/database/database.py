@@ -1,10 +1,11 @@
+import os
 from pathlib import Path
 from sqlalchemy import create_engine
 from sqlalchemy.orm import DeclarativeBase, sessionmaker
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
-DATABASE_PATH = PROJECT_ROOT/"weather.db"
-DATABASE_URL = f"sqlite:///{DATABASE_PATH}"
+DEFAULT_DATABASE_PATH = PROJECT_ROOT/"weather.db"
+DATABASE_URL = os.getenv("SMART_PLANNER_DATABASE_URL", f"sqlite:///{DEFAULT_DATABASE_PATH}")
 
 class Base(DeclarativeBase):
     pass
