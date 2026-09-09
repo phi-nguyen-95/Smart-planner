@@ -6,8 +6,10 @@ from applications.data_collector_server.producer import publish_weather_event
 from applications.data_collector_server.collector import collect_weather
 from components.analysis_client import get_latest_analysis, get_trend_analysis
 from components.database.repository import save_weather, get_recent_weather
+from components.database.database import init_db
 
 app = Flask(__name__)
+init_db()
 
 # Production monitoring metrics
 
