@@ -26,41 +26,30 @@ https://smart-planner-phi-b58e7a19b159.herokuapp.com
 External Weather API
 
         |
-
         v
 
 Data Collector
 
         |
-
         v
 
 Weather Database
 
         |
-
         +--------> Basic Web Server
-
         |               |
-
         |               | REST
-
         |               v
-
         |         Data Analyzer
-
         |
-
         +--------> RabbitMQ Producer
 
                          |
-
                          v
 
                   weather_events
 
                          |
-
                          v
 
                       Consumer
