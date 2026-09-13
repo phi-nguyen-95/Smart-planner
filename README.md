@@ -24,25 +24,45 @@ https://smart-planner-phi-b58e7a19b159.herokuapp.com
 
 ## Architecture
 External Weather API
+
         |
+
         v
+
 Data Collector
+
         |
+
         v
+
 Weather Database
+
         |
+
         +--------> Basic Web Server
+
         |               |
+
         |               | REST
+
         |               v
+
         |         Data Analyzer
+
         |
+
         +--------> RabbitMQ Producer
+
                          |
+
                          v
+
                   weather_events
+
                          |
+
                          v
+
                       Consumer
 
 The REST connection provides synchronous communication between the web server and analyzer.
@@ -52,16 +72,23 @@ RabbitMQ provides asynchorous event collaboration between the weather producer a
 ## Project Structure
 
 applications/
+
 |-- basic server/
+
 |-- data_collector_server/
+
 |-- data_analyzer_server/
 
 components/
+
 |-- database/
 
 tests/
+
 |-- unit_test/
+
 |-- mock_object_test/
+
 |-- integration_test
 
 ## Technologies:
@@ -78,25 +105,33 @@ tests/
 ## Run locally
 
 Clone the repository:
+
 git clone https://github.com/phi-nguyen-95/Smart-planner.git
+
 cd Smart-planner
 
 Create and activate a virtual environment:
+
 python3 -m venv venv
+
 source venv/bin/activate
 
 Install dependencies:
+
 pip install -r requirements.txt
 
 Run Smart Planner:
+
 PORT=5002 bash start.sh
 
 Open:
+
 http://127.0.0.1:5002
 
 ## Run Tests
 
 Run the complete automated test suite:
+
 ./run_tests.sh
 
 The test suite uses a temporary isolated database so test data does not modify the normal application database.
@@ -104,9 +139,11 @@ The test suite uses a temporary isolated database so test data does not modify t
 ## RabbitMQ Event Messaging
 
 Start RabbitMQ:
+
 brew services start rabbitmq
 
 Start the consumer:
+
 python3 -m applications.data_analyzer_server.consumer
 
 When weather data is collected, the producer publishes a `weather.collected` event to the `weather_events` queue.
@@ -118,9 +155,11 @@ RabbitMQ messaging is currently demonstrated locally.
 ## Monitoring:
 
 Health endpoint:
+
 /health
 
 Metrics endpoint:
+
 /metrics
 
 ## Continuous Integration and Deployment
